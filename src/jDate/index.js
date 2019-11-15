@@ -220,7 +220,11 @@ export default class JDate extends Date {
    * Sets the milliseconds value in the Date object using Universal Coordinated Time (UTC).
    * @param ms A numeric value equal to the millisecond value.
    */
-  setUTCMilliseconds(ms) {}
+  setUTCMilliseconds(ms) {
+    const res = this._gDate.setUTCMilliseconds(ms)
+    this.syncJalali()
+    return res
+  }
 
   /**
    * Sets the seconds value in the Date object using local time.
@@ -238,7 +242,11 @@ export default class JDate extends Date {
    * @param sec A numeric value equal to the seconds value.
    * @param ms A numeric value equal to the milliseconds value.
    */
-  setUTCSeconds(sec, ms) {}
+  setUTCSeconds(sec, ms) {
+    const res = this._gDate.setUTCSeconds(sec, ms)
+    this.syncJalali()
+    return res
+  }
 
   /**
    * Sets the minutes value in the Date object using local time.
@@ -258,7 +266,11 @@ export default class JDate extends Date {
    * @param sec A numeric value equal to the seconds value.
    * @param ms A numeric value equal to the milliseconds value.
    */
-  setUTCMinutes(min, sec, ms) {}
+  setUTCMinutes(min, sec, ms) {
+    const res = this._gDate.setUTCMinutes(min, sec, ms)
+    this.syncJalali()
+    return res
+  }
 
   /**
    * Sets the hour value in the Date object using local time.
@@ -280,7 +292,11 @@ export default class JDate extends Date {
    * @param sec A numeric value equal to the seconds value.
    * @param ms A numeric value equal to the milliseconds value.
    */
-  setUTCHours(hours, min, sec, ms) {}
+  setUTCHours(hours, min, sec, ms) {
+    const res = this._gDate.setUTCHours(hours, min, sec, ms)
+    this.syncJalali()
+    return res
+  }
 
   /**
    * Sets the numeric day-of-the-month value of the Date object using local time.
@@ -294,7 +310,9 @@ export default class JDate extends Date {
    * Sets the numeric day of the month in the Date object using Universal Coordinated Time (UTC).
    * @param date A numeric value equal to the day of the month.
    */
-  setUTCDate(date) {}
+  setUTCDate(date) {
+    return this.setJalaliParameters(null, null, date)
+  }
 
   /**
    * Sets the month value in the Date object using local time.
@@ -310,7 +328,9 @@ export default class JDate extends Date {
    * @param month A numeric value equal to the month. The value for January is 0, and other month values follow consecutively.
    * @param date A numeric value representing the day of the month. If it is not supplied, the value from a call to the getUTCDate method is used.
    */
-  setUTCMonth(month, date) {}
+  setUTCMonth(month, date) {
+    return this.setJalaliParameters(null, month, date)
+  }
 
   /**
    * Sets the year of the Date object using local time.
@@ -328,16 +348,28 @@ export default class JDate extends Date {
    * @param month A numeric value equal to the month. The value for January is 0, and other month values follow consecutively. Must be supplied if numDate is supplied.
    * @param date A numeric value equal to the day of the month.
    */
-  setUTCFullYear(year, month, date) {}
+  setUTCFullYear(year, month, date) {
+    return this.setJalaliParameters(year, month, date)
+  }
 
   /** Returns a date converted to a string using Universal Coordinated Time (UTC). */
-  toUTCString() {}
+  toUTCString() {
+    return this._gDate.toUTCString()
+  }
 
   /** Returns a date as a string value in ISO format. */
-  toISOString() {}
+  toISOString() {
+    return this._gDate.toISOString()
+  }
 
   /** Used by the JSON.stringify method to enable the transformation of an object's data for JavaScript Object Notation (JSON) serialization. */
-  toJSON(key) {}
+  toJSON(key) {
+    return this._jDate.year + '-' + this._jDate.month
+      + '-' + this._jDate.day + 'T' + this._gDate.getHours()
+      + ':' + this._gDate.getMinutes() + ':' + this._gDate.getSeconds()
+      + '.' + (this._gDate.getMilliseconds() / 1000).toFixed(3).slice(2, 5)
+      + 'Z'
+  } 
 
   setJalaliParameters(year, monthIndex, date) {
     year = year || year === 0 ? year : this._jDate.year
