@@ -123,7 +123,9 @@ export default class JDate extends Date {
   }
 
   /** Gets the year using Universal Coordinated Time (UTC). */
-  getUTCFullYear() {}
+  getUTCFullYear() {
+    return this._gDate.getUTCFullYear()
+  }
 
   /** Gets the jalali month index (0 - 11), using local time. */
   getMonth() {
@@ -131,7 +133,9 @@ export default class JDate extends Date {
   }
 
   /** Gets the month of a Date object using Universal Coordinated Time (UTC). */
-  getUTCMonth() {}
+  getUTCMonth() {
+    return this._gDate.getUTCMonth()
+  }
 
   /** Gets the jalali day-of-the-month (1 - 29/30/31), using local time. */
   getDate() {
@@ -139,7 +143,9 @@ export default class JDate extends Date {
   }
 
   /** Gets the day-of-the-month, using Universal Coordinated Time (UTC). */
-  getUTCDate() {}
+  getUTCDate() {
+    return this._gDate.getUTCDate()
+  }
 
   /** Gets the day of the week, using local time. */
   getDay() {
@@ -147,7 +153,9 @@ export default class JDate extends Date {
   }
 
   /** Gets the day of the week using Universal Coordinated Time (UTC). */
-  getUTCDay() {}
+  getUTCDay() {
+    return this._gDate.getUTCDay()
+  }
 
   /** Gets the hours in a date, using local time. */
   getHours() {
@@ -155,7 +163,9 @@ export default class JDate extends Date {
   }
 
   /** Gets the hours value in a Date object using Universal Coordinated Time (UTC). */
-  getUTCHours() {}
+  getUTCHours() {
+    return this._gDate.getUTCHours()
+  }
 
   /** Gets the minutes of a Date object, using local time. */
   getMinutes() {
@@ -163,7 +173,9 @@ export default class JDate extends Date {
   }
 
   /** Gets the minutes of a Date object using Universal Coordinated Time (UTC). */
-  getUTCMinutes() {}
+  getUTCMinutes() {
+    return this._gDate.getUTCMinutes()
+  }
 
   /** Gets the seconds of a Date object, using local time. */
   getSeconds() {
@@ -171,16 +183,24 @@ export default class JDate extends Date {
   }
 
   /** Gets the seconds of a Date object using Universal Coordinated Time (UTC). */
-  getUTCSeconds() {}
+  getUTCSeconds() {
+    return this._gDate.getUTCSeconds()
+  }
 
   /** Gets the milliseconds of a Date, using local time. */
-  getMilliseconds() {}
+  getMilliseconds() {
+    return this._gDate.getMilliseconds()
+  }
 
   /** Gets the milliseconds of a Date object using Universal Coordinated Time (UTC). */
-  getUTCMilliseconds() {}
+  getUTCMilliseconds() {
+    return this._gDate.getUTCMilliseconds()
+  }
 
   /** Gets the difference in minutes between the time on the local computer and Universal Coordinated Time (UTC). */
-  getTimezoneOffset() {}
+  getTimezoneOffset() {
+    return this._gDate.getTimezoneOffset()
+  }
 
   /**
    * Sets the date and time value in the Date object.
