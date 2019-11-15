@@ -1,10 +1,4 @@
-import {
-  toJalaali,
-  jalaaliMonthLength,
-  toGregorian,
-  isValidJalaaliDate
-} from '../_lib/jalali'
-import { da } from '../locale'
+import { toJalaali, jalaaliMonthLength, toGregorian } from '../_lib/jalali'
 
 const jMonths = 'فروردین_اردیبهشت_خرداد_تیر_مرداد_شهریور_مهر_آبان_آذر_دی_بهمن_اسفند'.split(
   '_'
@@ -99,7 +93,7 @@ export default class JDate extends Date {
 
   /** Returns a date as a string value appropriate to the host environment's current locale. */
   toLocaleDateString() {
-    return `${this.getMonth() + 1}/${this.getDate()}/${this.getFullYear()}`
+    return `${this.getFullYear()}/${this.getMonth() + 1}/${this.getDate()}`
   }
 
   /** Returns a time as a string value appropriate to the host environment's current locale. */
@@ -346,35 +340,43 @@ export default class JDate extends Date {
   toJSON(key) {}
 
   setJalaliParameters(year, monthIndex, date) {
-    year = year || this._jDate.year
-    monthIndex = monthIndex || this._jDate.month
-    date = date || this._jDate.day
+    year = year || year === 0 ? year : this._jDate.year
+    monthIndex = monthIndex || monthIndex === 0 ? monthIndex : this._jDate.month
+    date = date || date === 0 ? date : this._jDate.day
 
-    let daysInMonth
+    if (date === 0) {
+      date = -1
+    }
+
+    let daysInMonth,
+      currentYear = year
     daysInMonth = jalaaliMonthLength(year, monthIndex + 1)
 
-    if (date >= 0) {
+    if (date > 0) {
       while (date > daysInMonth) {
         monthIndex++
         date -= daysInMonth
 
         if (monthIndex % 12 === 0) {
-          year++
+          currentYear++
         }
-        daysInMonth = jalaaliMonthLength(year, monthIndex)
+
+        daysInMonth = jalaaliMonthLength(currentYear, monthIndex + 1)
       }
     } else {
-      while (date < 0 && Math.abs(date) > daysInMonth) {
+      while (date < 0) {
         monthIndex--
-        date += daysInMonth
+        daysInMonth = jalaaliMonthLength(year, monthIndex + 1)
 
-        if (monthIndex < 0) {
-          // go to last year
-          monthIndex = 11
-          year--
+        if (Math.abs(date) >= daysInMonth) {
+          date += daysInMonth
+        } else {
+          date = daysInMonth + date + 1
         }
+      }
 
-        daysInMonth = jalaaliMonthLength(year, monthIndex)
+      if (date === 0) {
+        date = 1
       }
     }
 
@@ -389,7 +391,6 @@ export default class JDate extends Date {
         monthIndex += 12
       }
     }
-
     const newGregorianDate = toGregorian(
       year,
       monthIndex + 1,
